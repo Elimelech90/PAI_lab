@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAHA.EXE — Random Joke Machine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d0d0d;
+  --yellow: #f5e642;
+  --orange: #ff7c2a;
+  --pink: #ff4fa3;
+  --green: #42f59b;
+  --blue: #42c8f5;
+  --white: #f0f0f0;
+  --dim: #555;
+  --card: #161616;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* Animated grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245,230,66,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,230,66,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gridMove {
+  from { background-position: 0 0; }
+  to   { background-position: 60px 60px; }
+}
+
+/* Floating emoji blobs */
+.blob {
+  position: fixed;
+  font-size: 5rem;
+  opacity: 0.06;
+  animation: floatBlob linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+.blob:nth-child(1)  { left: 5%;  top: 10%; animation-duration: 14s; animation-delay: 0s; }
+.blob:nth-child(2)  { left: 85%; top: 5%;  animation-duration: 18s; animation-delay: -4s; }
+.blob:nth-child(3)  { left: 50%; top: 80%; animation-duration: 12s; animation-delay: -7s; }
+.blob:nth-child(4)  { left: 20%; top: 70%; animation-duration: 16s; animation-delay: -2s; }
+.blob:nth-child(5)  { left: 75%; top: 60%; animation-duration: 20s; animation-delay: -9s; }
+
+@keyframes floatBlob {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  33%  { transform: translateY(-30px) rotate(8deg); }
+  66%  { transform: translateY(15px) rotate(-5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* ---- LAYOUT ---- */
+.wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1.5rem 4rem;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* ---- HEADER ---- */
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  animation: slideDown 0.6s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.logo-emoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%,100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg); }
+}
+
+h1 {
+  font-family: 'Boogaloo', cursive;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 50%, var(--pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tagline {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--dim);
+  margin-top: 0.4rem;
+}
+
+/* ---- CONTROLS ---- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  animation: fadeUp 0.6s 0.15s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cat-btn {
+  background: transparent;
+  border: 1.5px solid var(--dim);
+  color: var(--dim);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cat-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cat-color, var(--yellow));
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: inherit;
+}
+
+.cat-btn:hover, .cat-btn.active {
+  border-color: var(--cat-color, var(--yellow));
+  color: var(--bg);
+}
+
+.cat-btn:hover::after, .cat-btn.active::after { opacity: 1; }
+.cat-btn span { position: relative; z-index: 1; }
+
+/* ---- BIG BUTTON ---- */
+.get-joke-btn {
+  font-family: 'Boogaloo', cursive;
+  font-size: 1.6rem;
+  letter-spacing: 0.08em;
+  background: var(--yellow);
+  color: var(--bg);
+  border: none;
+  border-radius: 999px;
+  padding: 1rem 3rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 0 #b5aa00, 0 8px 20px rgba(245,230,66,0.25);
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.6s 0.25s ease both;
+}
+
+.get-joke-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 #b5aa00, 0 14px 30px rgba(245,230,66,0.35);
+}
+
+.get-joke-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #b5aa00, 0 4px 10px rgba(245,230,66,0.2);
+}
+
+.get-joke-btn.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* ---- JOKE CARD ---- */
+.joke-card {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeUp 0.6s 0.35s ease both;
+  transition: border-color 0.4s;
+}
+
+.joke-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--yellow), var(--orange), var(--pink));
+  background-size: 200%;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  from { background-position: 0%; }
+  to   { background-position: 200%; }
+}
+
+/* Big quote mark */
+.joke-card::after {
+  content: '"';
+  position: absolute;
+  top: -0.2rem;
+  right: 1.5rem;
+  font-family: 'Boogaloo', cursive;
+  font-size: 8rem;
+  color: rgba(245,230,66,0.05);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cat-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(245,230,66,0.12);
+  color: var(--yellow);
+  border: 1px solid rgba(245,230,66,0.25);
+}
+
+.joke-id {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--dim);
+}
+
+/* Joke text */
+.joke-text {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  line-height: 1.7;
+  color: var(--white);
+  font-weight: 300;
+}
+
+.joke-text.hidden { display: none; }
+
+.joke-setup {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--white);
+}
+
+.joke-delivery-wrapper {
+  margin-top: 0.5rem;
+}
+
+.reveal-btn {
+  background: transparent;
+  border: 1.5px solid rgba(66,245,155,0.4);
+  color: var(--green);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1.3rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1rem;
+}
+
+.reveal-btn:hover {
+  background: rgba(66,245,155,0.1);
+  border-color: var(--green);
+  box-shadow: 0 0 20px rgba(66,245,155,0.2);
+}
+
+.joke-delivery {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--yellow);
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.joke-delivery.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reaction row */
+.reaction-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #222;
+}
+
+.reaction-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 0.25rem;
+}
+
+.reaction-btn:hover { transform: scale(1.3); }
+.reaction-btn:active { transform: scale(0.9); }
+
+.reaction-count {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--dim);
+  margin-left: -0.5rem;
+}
+
+.spacer { flex: 1; }
+
+.copy-btn {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  background: transparent;
+  border: 1px solid #333;
+  color: var(--dim);
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+/* Placeholder */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: var(--dim);
+  font-style: italic;
+  gap: 1rem;
+}
+
+.placeholder-emoji { font-size: 3.5rem; }
+
+/* Loading dots */
+.loading-dots {
+  display: none;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.loading-dots.active { display: flex; }
+
+.dot {
+  width: 10px; height: 10px;
+  background: var(--yellow);
+  border-radius: 50%;
+  animation: bounce 0.8s ease-in-out infinite;
+}
+
+.dot:nth-child(2) { animation-delay: 0.15s; background: var(--orange); }
+.dot:nth-child(3) { animation-delay: 0.3s;  background: var(--pink); }
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); opacity: 0.5; }
+  50%      { transform: translateY(-14px); opacity: 1; }
+}
+
+/* Error */
+.error-box {
+  display: none;
+  background: rgba(255,79,163,0.08);
+  border: 1px solid rgba(255,79,163,0.3);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  color: var(--pink);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  width: 100%;
+}
+
+.error-box.active { display: block; }
+
+/* Stats bar */
+.stats-bar {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+  animation: fadeUp 0.6s 0.45s ease both;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Boogaloo', cursive;
+  font-size: 2rem;
+  color: var(--yellow);
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--dim);
+  margin-top: 0.2rem;
+}
+
+/* footer */
+footer {
+  margin-top: 3rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: #333;
+  text-align: center;
+}
+
+/* Category colors */
+.cat-Any        { --cat-color: var(--yellow); }
+.cat-Programming{ --cat-color: var(--blue); }
+.cat-Misc       { --cat-color: var(--orange); }
+.cat-Dark       { --cat-color: #888; }
+.cat-Pun        { --cat-color: var(--green); }
+.cat-Spooky     { --cat-color: #9b59b6; }
+.cat-Christmas  { --cat-color: #e74c3c; }
+</style>
+</head>
+<body>
+
+<!-- Background blobs -->
+<span class="blob">😂</span>
+<span class="blob">🤣</span>
+<span class="blob">😆</span>
+<span class="blob">🎭</span>
+<span class="blob">💀</span>
+
+<div class="wrapper">
+
+  <!-- Header -->
+  <header>
+    <span class="logo-emoji">🤡</span>
+    <h1>HAHA.EXE</h1>
+    <div class="tagline">RANDOM JOKE MACHINE · POWERED BY JOKEAPI</div>
+  </header>
+
+  <!-- Category filters -->
+  <div class="controls" id="categoryControls">
+    <button class="cat-btn cat-Any active" data-cat="Any" onclick="selectCategory(this)">
+      <span>⚡ Any</span>
+    </button>
+    <button class="cat-btn cat-Programming" data-cat="Programming" onclick="selectCategory(this)">
+      <span>💻 Programming</span>
+    </button>
+    <button class="cat-btn cat-Misc" data-cat="Misc" onclick="selectCategory(this)">
+      <span>🎲 Misc</span>
+    </button>
+    <button class="cat-btn cat-Dark" data-cat="Dark" onclick="selectCategory(this)">
+      <span>🌑 Dark</span>
+    </button>
+    <button class="cat-btn cat-Pun" data-cat="Pun" onclick="selectCategory(this)">
+      <span>🥁 Pun</span>
+    </button>
+    <button class="cat-btn cat-Spooky" data-cat="Spooky" onclick="selectCategory(this)">
+      <span>👻 Spooky</span>
+    </button>
+    <button class="cat-btn cat-Christmas" data-cat="Christmas" onclick="selectCategory(this)">
+      <span>🎄 Christmas</span>
+    </button>
+  </div>
+
+  <!-- Big button -->
+  <button class="get-joke-btn" id="jokeBtn" onclick="fetchJoke()">
+    🎰 Tell Me A Joke!
+  </button>
+
+  <!-- Error -->
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- Joke Card -->
+  <div class="joke-card" id="jokeCard">
+    <div class="placeholder" id="placeholder">
+      <span class="placeholder-emoji">🎭</span>
+      <span>Hit the button above to get your first joke!</span>
+    </div>
+
+    <div class="loading-dots" id="loadingDots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <div id="jokeContent" style="display:none; flex-direction:column; gap:1rem;">
+      <div class="card-meta">
+        <span class="cat-badge" id="catBadge">—</span>
+        <span class="joke-id" id="jokeId">#—</span>
+      </div>
+
+      <!-- Single joke -->
+      <div id="singleJoke">
+        <p class="joke-text" id="jokeText"></p>
+      </div>
+
+      <!-- Two-part joke -->
+      <div id="twopartJoke" style="display:none;">
+        <p class="joke-setup" id="jokeSetup"></p>
+        <div class="joke-delivery-wrapper">
+          <button class="reveal-btn" id="revealBtn" onclick="revealDelivery()">
+            🥁 Reveal Punchline
+          </button>
+          <p class="joke-delivery" id="jokeDelivery"></p>
+        </div>
+      </div>
+
+      <!-- Reactions -->
+      <div class="reaction-row">
+        <button class="reaction-btn" onclick="react('😂', this)" title="Hilarious">😂</button>
+        <span class="reaction-count" id="count-laugh">0</span>
+        <button class="reaction-btn" onclick="react('🙄', this)" title="Eye roll">🙄</button>
+        <span class="reaction-count" id="count-eyeroll">0</span>
+        <button class="reaction-btn" onclick="react('💀', this)" title="Dead">💀</button>
+        <span class="reaction-count" id="count-dead">0</span>
+        <div class="spacer"></div>
+        <button class="copy-btn" onclick="copyJoke()">COPY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num" id="statTotal">0</div>
+      <div class="stat-label">JOKES TOLD</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statLaughs">0</div>
+      <div class="stat-label">LAUGHS</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statCategory">—</div>
+      <div class="stat-label">LAST CATEGORY</div>
+    </div>
+  </div>
+
+  <footer>LAB 7 · PAI · RANDOM JOKE APP · JOKEAPI.DEV</footer>
+</div>
+
+<script>
+let selectedCategory = 'Any';
+let totalJokes = 0;
+let totalLaughs = 0;
+let currentJoke = null;
+const reactionCounts = { laugh: 0, eyeroll: 0, dead: 0 };
+
+function selectCategory(btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedCategory = btn.dataset.cat;
+}
+
+async function fetchJoke() {
+  const btn = document.getElementById('jokeBtn');
+  btn.classList.add('loading');
+  btn.textContent = '⏳ Loading...';
+
+  document.getElementById('placeholder').style.display = 'none';
+  document.getElementById('jokeContent').style.display = 'none';
+  document.getElementById('loadingDots').classList.add('active');
+  document.getElementById('errorBox').classList.remove('active');
+
+  // Reset reactions display
+  document.getElementById('count-laugh').textContent = reactionCounts.laugh;
+  document.getElementById('count-eyeroll').textContent = reactionCounts.eyeroll;
+  document.getElementById('count-dead').textContent = reactionCounts.dead;
+
+  try {
+    const res = await fetch(`/api/joke/${selectedCategory}`);
+    const data = await res.json();
+
+    document.getElementById('loadingDots').classList.remove('active');
+
+    if (data.error) {
+      document.getElementById('errorBox').textContent = '⚠ ' + data.error;
+      document.getElementById('errorBox').classList.add('active');
+      btn.classList.remove('loading');
+      btn.textContent = '🎰 Tell Me A Joke!';
+      return;
+    }
+
+    currentJoke = data;
+    renderJoke(data);
+
+    totalJokes++;
+    document.getElementById('statTotal').textContent = totalJokes;
+    document.getElementById('statCategory').textContent = data.category.toUpperCase();
+
+  } catch(e) {
+    document.getElementById('loadingDots').classList.remove('active');
+    document.getElementById('errorBox').textContent = '⚠ Could not reach server. Make sure Flask is running.';
+    document.getElementById('errorBox').classList.add('active');
+  }
+
+  btn.classList.remove('loading');
+  btn.textContent = '🎰 Tell Me A Joke!';
+}
+
+function renderJoke(data) {
+  document.getElementById('catBadge').textContent = data.category;
+  document.getElementById('jokeId').textContent = `#${data.id}`;
+
+  if (data.type === 'single') {
+    document.getElementById('singleJoke').style.display = 'block';
+    document.getElementById('twopartJoke').style.display = 'none';
+    document.getElementById('jokeText').textContent = data.joke;
+  } else {
+    document.getElementById('singleJoke').style.display = 'none';
+    document.getElementById('twopartJoke').style.display = 'block';
+    document.getElementById('jokeSetup').textContent = data.setup;
+    document.getElementById('jokeDelivery').textContent = data.delivery;
+    document.getElementById('jokeDelivery').classList.remove('revealed');
+    document.getElementById('revealBtn').style.display = 'inline-block';
+  }
+
+  document.getElementById('jokeContent').style.display = 'flex';
+
+  // Animate card
+  const card = document.getElementById('jokeCard');
+  card.style.animation = 'none';
+  requestAnimationFrame(() => {
+    card.style.animation = 'popIn 0.4s cubic-bezier(.34,1.56,.64,1)';
+  });
+}
+
+function revealDelivery() {
+  document.getElementById('jokeDelivery').classList.add('revealed');
+  document.getElementById('revealBtn').style.display = 'none';
+}
+
+function react(emoji, btn) {
+  const map = { '😂': 'laugh', '🙄': 'eyeroll', '💀': 'dead' };
+  const key = map[emoji];
+  reactionCounts[key]++;
+  document.getElementById(`count-${key}`).textContent = reactionCounts[key];
+
+  if (emoji === '😂') {
+    totalLaughs++;
+    document.getElementById('statLaughs').textContent = totalLaughs;
+  }
+
+  // Pop animation
+  btn.style.animation = 'none';
+  btn.style.transform = 'scale(1.5)';
+  setTimeout(() => { btn.style.transform = ''; }, 200);
+}
+
+function copyJoke() {
+  if (!currentJoke) return;
+  let text = currentJoke.type === 'single'
+    ? currentJoke.joke
+    : `${currentJoke.setup}\n\n${currentJoke.delivery}`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'COPIED!';
+    btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = 'COPY'; btn.style.color = ''; }, 1500);
+  });
+}
+
+// Keyboard shortcut
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space' && e.target === document.body) {
+    e.preventDefault();
+    fetchJoke();
+  }
+});
+
+// Pop-in keyframe injection
+const style = document.createElement('style');
+style.textContent = `@keyframes popIn {
+  from { opacity:0.5; transform: scale(0.95); }
+  to   { opacity:1;   transform: scale(1); }
+}`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
