@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pakistani Law Assistant — Know Your Rights</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:        #0d1b2a;
+      --paper:      #f5f0e8;
+      --gold:       #c9a84c;
+      --gold-light: #e8d5a3;
+      --emerald:    #013765;
+      --emerald-mid:#01589c;
+      --emerald-light:#e8f1fa;
+      --red-pk:     #01411c;
+      --muted:      #8a8070;
+      --border:     #d6cdb8;
+      --white:      #ffffff;
+      --shadow:     0 4px 32px rgba(13,27,42,0.12);
+      --shadow-sm:  0 2px 8px rgba(13,27,42,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 10% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 90% 100%, rgba(1,55,101,0.08) 0%, transparent 60%);
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    header {
+      background: var(--emerald);
+      color: var(--white);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(1,55,101,0.3);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--gold);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text span { color: var(--gold); }
+
+    .header-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: rgba(201,168,76,0.2);
+      color: var(--gold-light);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero h1 em {
+      color: var(--emerald);
+      font-style: normal;
+      position: relative;
+    }
+
+    .hero h1 em::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── Stats Row ──────────────────────────────────────── */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--emerald);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── Main Layout ─────────────────────────────────────── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── Ask Panel ───────────────────────────────────────── */
+    .ask-panel {
+      background: var(--white);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .ask-header {
+      background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-mid) 100%);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ask-header-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .ask-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .ask-header p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      margin-top: 2px;
+    }
+
+    .ask-body { padding: 2rem; }
+
+    /* Category select */
+    .field-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .category-select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      background: var(--paper);
+      margin-bottom: 1.25rem;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8070' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .category-select:focus {
+      outline: none;
+      border-color: var(--emerald-mid);
+    }
+
+    /* Textarea */
+    .question-area {
+      width: 100%;
+      min-height: 130px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      background: var(--paper);
+      resize: vertical;
+      line-height: 1.6;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      margin-bottom: 1rem;
+    }
+
+    .question-area::placeholder { color: #b0a898; }
+
+    .question-area:focus {
+      outline: none;
+      border-color: var(--emerald-mid);
+      box-shadow: 0 0 0 3px rgba(1,88,156,0.1);
+    }
+
+    .ask-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-mid) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.02em;
+    }
+
+    .ask-btn:hover  { opacity: 0.92; }
+    .ask-btn:active { transform: scale(0.99); }
+    .ask-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Answer Card ─────────────────────────────────────── */
+    .answer-card {
+      background: var(--emerald-light);
+      border: 1px solid rgba(1,55,101,0.15);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .answer-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .answer-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--emerald);
+      color: var(--white);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .answer-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      color: var(--ink);
+      font-family: 'IBM Plex Sans', sans-serif;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .action-btn:hover {
+      background: var(--ink);
+      color: var(--white);
+      border-color: var(--ink);
+    }
+
+    .answer-text {
+      font-size: 0.93rem;
+      line-height: 1.75;
+      color: var(--ink);
+      white-space: pre-wrap;
+    }
+
+    /* Bold markdown rendering */
+    .answer-text strong {
+      color: var(--emerald);
+      font-weight: 600;
+    }
+
+    .sources-section {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(1,55,101,0.15);
+    }
+
+    .sources-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .source-tag {
+      display: inline-block;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--emerald);
+      margin: 3px 4px 3px 0;
+    }
+
+    .disclaimer-box {
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: #6b5a30;
+      line-height: 1.5;
+    }
+
+    .disclaimer-box strong { color: #8a6e1f; }
+
+    /* ── Error State ─────────────────────────────────────── */
+    .error-card {
+      background: #fff5f5;
+      border: 1px solid #fcc;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: #c0392b;
+      display: none;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .sidebar-card {
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .sidebar-card-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Sample questions */
+    .sample-question {
+      display: block;
+      padding: 10px 1.25rem;
+      font-size: 0.85rem;
+      color: var(--ink);
+      border-bottom: 1px solid #f0ece4;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+      line-height: 1.4;
+    }
+
+    .sample-question:last-child { border-bottom: none; }
+
+    .sample-question:hover {
+      background: var(--emerald-light);
+      color: var(--emerald);
+    }
+
+    .sample-question::before {
+      content: '→ ';
+      opacity: 0.4;
+    }
+
+    /* Category pills */
+    .cat-pills { padding: 1rem 1.25rem; display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .cat-pill {
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 10px;
+      cursor: pointer;
+      color: var(--ink);
+      transition: all 0.15s;
+    }
+
+    .cat-pill:hover, .cat-pill.active {
+      background: var(--emerald);
+      color: var(--white);
+      border-color: var(--emerald);
+    }
+
+    /* How it works */
+    .how-steps { padding: 1rem 1.25rem; }
+
+    .how-step {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+
+    .how-step:last-child { margin-bottom: 0; }
+
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--emerald);
+      color: var(--white);
+      border-radius: 50%;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-text { font-size: 0.83rem; color: var(--ink); line-height: 1.5; }
+    .step-text strong { font-weight: 600; display: block; margin-bottom: 2px; }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    footer strong { color: var(--emerald); }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        order: -1;
+      }
+      .hero { padding: 2.5rem 1.5rem 1.5rem; }
+      .main { padding: 0 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────── -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/">
+      <div class="logo-icon">⚖️</div>
+      <span class="logo-text">Pakistani <span>Law</span> Assistant</span>
+    </a>
+    <span class="header-badge">🇵🇰 Free Legal AI</span>
+  </div>
+</header>
+
+<!-- ── Hero ──────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-eyebrow">Your Rights. Your Language. Free.</div>
+  <h1>Know Your <em>Legal Rights</em><br>In Pakistan — Instantly</h1>
+  <p class="hero-sub">
+    Ask any legal question in plain English or Roman Urdu. Get answers
+    grounded in actual Pakistani law — Constitution, PPC, CrPC, PECA, Family Law & more.
+  </p>
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Law Sources</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">8</div>
+      <div class="stat-label">Legal Categories</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">₨0</div>
+      <div class="stat-label">Cost to You</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">AI</div>
+      <div class="stat-label">Powered by RAG</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Main ───────────────────────────────────────── -->
+<div class="main">
+
+  <!-- Ask Panel -->
+  <div>
+    <div class="ask-panel">
+      <div class="ask-header">
+        <div class="ask-header-icon">🔍</div>
+        <div>
+          <h2>Ask Your Legal Question</h2>
+          <p>Type in English or Roman Urdu — we understand both</p>
+        </div>
+      </div>
+
+      <div class="ask-body">
+        <label class="field-label" for="categorySelect">Filter by Legal Category</label>
+        <select class="category-select" id="categorySelect">
+          {% for cat in categories %}
+          <option value="{{ cat }}">{{ cat }}</option>
+          {% endfor %}
+        </select>
+
+        <label class="field-label" for="questionInput">Your Question</label>
+        <textarea
+          class="question-area"
+          id="questionInput"
+          placeholder="e.g. Can police arrest me without a warrant? Or: Mujhe police ne bina reason ke pakra, mera kya haq hai?"
+        ></textarea>
+
+        <button class="ask-btn" id="askBtn" onclick="askQuestion()">
+          <div class="spinner" id="spinner"></div>
+          <span id="btnText">⚖️ &nbsp; Get Legal Answer</span>
+        </button>
+
+        <div class="error-card" id="errorCard"></div>
+
+        <div class="answer-card" id="answerCard">
+          <div class="answer-meta">
+            <span class="answer-badge" id="categoryBadge">Legal Answer</span>
+            <div class="answer-actions">
+              <button class="action-btn" onclick="copyAnswer()">📋 Copy</button>
+              <button class="action-btn" onclick="downloadPDF()">📥 PDF</button>
+            </div>
+          </div>
+          <div class="answer-text" id="answerText"></div>
+          <div class="sources-section" id="sourcesSection">
+            <div class="sources-label">📚 Sources Referenced</div>
+            <div id="sourcesList"></div>
+          </div>
+          <div class="disclaimer-box">
+            <strong>⚠️ Disclaimer:</strong> This is general legal information based on Pakistani law,
+            not professional legal advice. For your specific situation, please consult a
+            licensed lawyer or visit a legal aid clinic.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <!-- Sample Questions -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">💬 Try These Questions</div>
+      {% for q in sample_questions %}
+      <span class="sample-question" onclick="fillQuestion('{{ q }}')">{{ q }}</span>
+      {% endfor %}
+    </div>
+
+    <!-- How It Works -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">⚙️ How It Works</div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>You Ask</strong>
+            Type your legal question in plain English or Roman Urdu
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>AI Searches</strong>
+            System searches Pakistani law documents using RAG technology
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Cited Answer</strong>
+            Get an answer with exact law section and plain explanation
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>Save It</strong>
+            Download your answer as a PDF to share or keep
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">📂 Legal Categories</div>
+      <div class="cat-pills">
+        {% for cat in categories %}
+        <span class="cat-pill {% if loop.first %}active{% endif %}"
+              onclick="selectCategory('{{ cat }}', this)">{{ cat }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Footer ────────────────────────────────────── -->
+<footer>
+  <strong>Pakistani Law Assistant</strong> — Built with Flask · RAG · Groq AI · FAISS ·
+  Powered by public Pakistani government law documents ·
+  <em>Not a substitute for professional legal advice.</em>
+</footer>
+
+<script>
+  let lastResult = null;
+
+  async function askQuestion() {
+    const query    = document.getElementById('questionInput').value.trim();
+    const category = document.getElementById('categorySelect').value;
+
+    if (!query) {
+      showError('Please type your legal question first.');
+      return;
+    }
+
+    setLoading(true);
+    hideError();
+    hideAnswer();
+
+    try {
+      const resp = await fetch('/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, category })
+      });
+
+      const data = await resp.json();
+
+      if (!resp.ok || data.error) {
+        showError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
+      lastResult = { query, ...data };
+      showAnswer(data);
+
+    } catch (err) {
+      showError('Network error. Make sure the Flask server is running.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function showAnswer(data) {
+    const card = document.getElementById('answerCard');
+    const text = document.getElementById('answerText');
+    const badge = document.getElementById('categoryBadge');
+    const srcList = document.getElementById('sourcesList');
+
+    // Render markdown bold
+    const rendered = (data.answer || '')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+    text.innerHTML = rendered;
+    badge.textContent = data.category || 'Legal Answer';
+
+    // Sources
+    if (data.sources && data.sources.length) {
+      srcList.innerHTML = data.sources
+        .map(s => `<span class="source-tag">📘 ${s}</span>`)
+        .join('');
+      document.getElementById('sourcesSection').style.display = 'block';
+    } else {
+      document.getElementById('sourcesSection').style.display = 'none';
+    }
+
+    card.style.display = 'block';
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function hideAnswer() {
+    document.getElementById('answerCard').style.display = 'none';
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorCard');
+    el.textContent = '⚠️ ' + msg;
+    el.style.display = 'block';
+  }
+
+  function hideError() {
+    document.getElementById('errorCard').style.display = 'none';
+  }
+
+  function setLoading(on) {
+    const btn = document.getElementById('askBtn');
+    const spinner = document.getElementById('spinner');
+    const btnText = document.getElementById('btnText');
+    btn.disabled = on;
+    spinner.style.display = on ? 'block' : 'none';
+    btnText.textContent = on ? 'Searching Pakistani Law...' : '⚖️  Get Legal Answer';
+  }
+
+  function fillQuestion(q) {
+    document.getElementById('questionInput').value = q;
+    document.getElementById('questionInput').focus();
+  }
+
+  function selectCategory(cat, el) {
+    document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('categorySelect').value = cat;
+  }
+
+  async function copyAnswer() {
+    const text = document.getElementById('answerText').innerText;
+    try {
+      await navigator.clipboard.writeText(text);
+      const btn = event.target;
+      const orig = btn.textContent;
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = orig, 2000);
+    } catch {}
+  }
+
+  async function downloadPDF() {
+    if (!lastResult) return;
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '⏳ Generating...';
+
+    try {
+      const resp = await fetch('/download-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query:   lastResult.query,
+          answer:  lastResult.answer,
+          sources: lastResult.sources
+        })
+      });
+
+      if (resp.ok) {
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'pakistani_law_answer.pdf';
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch {}
+
+    btn.textContent = orig;
+  }
+
+  // Allow Enter key (Ctrl+Enter) to submit
+  document.getElementById('questionInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      askQuestion();
+    }
+  });
+</script>
+</body>
+</html>

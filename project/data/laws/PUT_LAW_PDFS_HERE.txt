@@ -1,0 +1,14 @@
+Place Pakistani law PDF files in this folder.
+
+Recommended files to download (all free from government websites):
+- constitution_1973.pdf       → na.gov.pk
+- ppc.pdf                     → pakistancode.gov.pk
+- crpc_1898.pdf               → pakistancode.gov.pk
+- peca_2016.pdf               → moitt.gov.pk
+- property_act.pdf            → pakistancode.gov.pk
+- muslim_family_laws.pdf      → pakistancode.gov.pk
+- labor_ordinance.pdf         → ilo.org
+- consumer_protection.pdf     → pakistancode.gov.pk
+- rent_restriction.pdf        → Punjab govt website
+
+After adding PDFs, run: python ingest.py
