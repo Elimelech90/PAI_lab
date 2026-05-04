@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕌 Hadith Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="chat-container">
+            <div class="header">
+                <h1>🕌 Hadith Chatbot</h1>
+                <p>Search and learn about Islamic Hadiths</p>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        Welcome to the Hadith Chatbot! 👋<br><br>
+                        You can:<br>
+                        • Search hadiths: "search [keyword]"<br>
+                        • Find by narrator: "narrator [name]"<br>
+                        • View collections<br>
+                        • Ask about specific topics<br><br>
+                        Type "help" for more information.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-section">
+                <div class="search-options">
+                    <button id="helpBtn" class="btn btn-secondary">Help</button>
+                    <button id="collectionsBtn" class="btn btn-secondary">Collections</button>
+                    <button id="clearBtn" class="btn btn-secondary">Clear</button>
+                </div>
+            </div>
+            
+            <div class="input-section">
+                <input 
+                    type="text" 
+                    id="userInput" 
+                    class="input-field" 
+                    placeholder="Type your question or search query..."
+                    autocomplete="off"
+                >
+                <button id="sendBtn" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+.settings/
+
+# Logs
+*.log
+logs/
+hadith_chatbot.log
+
+# Data files
+*.json
+!requirements.json
+hadith_results.json
+conversation_history.json
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Cache
+.cache/
+*.cache
+
+# Test coverage
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary
+*.tmp
+*.bak
+*.swp
+temp/
+tmp/
+
+# OS
+Thumbs.db
+.DS_Store
+._.DS_Store
+._*
+
+# Node (if using any Node tools)
+node_modules/
+npm-debug.log
+
+# Flask
+instance/
+.webassets-cache
+
+# Misc
+*.pem
+*.key
+secrets.json
+config.local.py
